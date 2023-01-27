@@ -37,11 +37,10 @@ let solar = {
     let bill = currentimport * 11.29; //variable rate
     let exportsavings = currentexport * 7.12; //variable rate
     let totalbill = bill - exportsavings;
-    let selfusesavings = ((yieldtotal - 755.55) - (currentexport)) * 11.29; //variable rate
-    let monthlysavings = selfusesavings + exportsavings; 
+    let selfusesavings = (yieldtotal - 755.55 - currentexport) * 11.29; //variable rate
+    let monthlysavings = selfusesavings + exportsavings;
 
     let totalsavings = selfusesavings + exportsavings + 6629.46; //variable total
-
 
     const monthname = [
       "January",
@@ -66,11 +65,16 @@ let solar = {
       "₱ " + Math.round(totalbill * 100) / 100;
     document.querySelector(".meralco").innerText = "Meralco Bill for " + month;
     document.querySelector(".uptime").innerText = "Updated: " + uploadTime;
-    document.querySelector(".prebill").innerText = "Import Cost: ₱ " + Math.round(bill * 100) / 100;
-    document.querySelector(".export").innerText = "Export Savings: ₱ " + Math.round(exportsavings * 100) / 100;
-    document.querySelector(".selfuse").innerText = "Self-Use Savings: ₱ " + Math.round(selfusesavings * 100) / 100;
-    document.querySelector(".monthly").innerText = "Monthly Savings: ₱ " + Math.round(monthlysavings * 100) / 100;
-    document.querySelector(".overall").innerText = "Overall Savings: ₱ " + Math.round(totalsavings * 100) / 100;
+    document.querySelector(".prebill").innerText =
+      "Import Cost: ₱ " + Math.round(bill * 100) / 100;
+    document.querySelector(".export").innerText =
+      "Export Savings: ₱ " + Math.round(exportsavings * 100) / 100;
+    document.querySelector(".selfuse").innerText =
+      "Self-Use Savings: ₱ " + Math.round(selfusesavings * 100) / 100;
+    document.querySelector(".monthly").innerText =
+      "Monthly Savings: ₱ " + Math.round(monthlysavings * 100) / 100;
+    document.querySelector(".overall").innerText =
+      "Overall Savings: ₱ " + Math.round(totalsavings * 100) / 100;
     document.querySelector(".solar").classList.remove("loading");
     //   document.body.style.backgroundImage =
     //     "url('https://source.unsplash.com/1600x900/?" + name + "')";
