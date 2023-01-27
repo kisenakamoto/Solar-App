@@ -69,7 +69,7 @@ let solar = {
     document.querySelector(".prebill").innerText = "Import Cost: ₱ " + Math.round(bill * 100) / 100;
     document.querySelector(".export").innerText = "Export Savings: ₱ " + Math.round(exportsavings * 100) / 100;
     document.querySelector(".selfuse").innerText = "Self-Use Savings: ₱ " + Math.round(selfusesavings * 100) / 100;
-    document.querySelector(".monthly").innerText = "Total Monthly Savings: ₱ " + Math.round(monthlysavings * 100) / 100;
+    document.querySelector(".monthly").innerText = "Monthly Savings: ₱ " + Math.round(monthlysavings * 100) / 100;
     document.querySelector(".overall").innerText = "Overall Savings: ₱ " + Math.round(totalsavings * 100) / 100;
     document.querySelector(".solar").classList.remove("loading");
     //   document.body.style.backgroundImage =
