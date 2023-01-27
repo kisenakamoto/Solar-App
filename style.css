@@ -81,6 +81,24 @@ h1.temp {
     margin-left: 8px;
 }
 
+.uptime {
+    font-size: 70%;
+    margin-top: 1em;
+    font-style: italic;
+}
+
+.prebill {
+    color: rgb(224, 84, 84);
+}
+
+.export {
+    color: rgb(0, 148, 34);
+}
+
+.overall {
+    font-weight: bold;
+}
+
 .description {
   text-transform: capitalize;
   margin-left: 8px;

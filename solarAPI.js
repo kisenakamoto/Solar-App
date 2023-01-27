@@ -32,30 +32,48 @@ let solar = {
   },
   displaySolar: function (data) {
     const { uploadTime, yieldtotal, feedinenergy, consumeenergy } = data.result;
-    let currentimport = consumeenergy - 941.5;
-    let currentexport = feedinenergy - 331.69;
-    let bill = currentimport * 11.29
-    let exportsavings = currentexport * 7.12
-    let totalbill = (bill - exportsavings);
+    let currentimport = consumeenergy - 941.5; //variable total
+    let currentexport = feedinenergy - 331.69; //variable total
+    let bill = currentimport * 11.29; //variable rate
+    let exportsavings = currentexport * 7.12; //variable rate
+    let totalbill = bill - exportsavings;
+    let selfusesavings = ((yieldtotal - 755.55) - (currentexport)) * 11.29; //variable rate
+    let monthlysavings = selfusesavings + exportsavings; 
 
-    const monthname = ["January","February","March","April","May","June","July","August","September","October","November","December","January"];
-
-  const d = new Date();
-  let month = monthname[d.getMonth() + 1];
+    let totalsavings = selfusesavings + exportsavings + 6629.46; //variable total
 
 
-    document.querySelector(".bill").innerText = "₱ " + Math.round(totalbill * 100) / 100;
+    const monthname = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+      "January",
+    ];
+
+    const d = new Date();
+    let month = monthname[d.getMonth() + 1];
+
+    document.querySelector(".bill").innerText =
+      "₱ " + Math.round(totalbill * 100) / 100;
     document.querySelector(".meralco").innerText = "Meralco Bill for " + month;
-    // document.querySelector(".temp").innerText = temp + "°C";
-    // document.querySelector(".humidity").innerText =
-    //   "Humidity: " + humidity + "%";
-    // document.querySelector(".clouds").innerText =
-    //   "Cloud Cover: " + all + "%";
-    // document.querySelector(".wind").innerText =
-    //   "Wind speed: " + speed + " km/h";
+    document.querySelector(".uptime").innerText = "Updated: " + uploadTime;
+    document.querySelector(".prebill").innerText = "Import Cost: ₱ " + Math.round(bill * 100) / 100;
+    document.querySelector(".export").innerText = "Export Savings: ₱ " + Math.round(exportsavings * 100) / 100;
+    document.querySelector(".selfuse").innerText = "Self-Use Savings: ₱ " + Math.round(selfusesavings * 100) / 100;
+    document.querySelector(".monthly").innerText = "Total Monthly Savings: ₱ " + Math.round(monthlysavings * 100) / 100;
+    document.querySelector(".overall").innerText = "Overall Savings: ₱ " + Math.round(totalsavings * 100) / 100;
     document.querySelector(".solar").classList.remove("loading");
-  //   document.body.style.backgroundImage =
-  //     "url('https://source.unsplash.com/1600x900/?" + name + "')";
+    //   document.body.style.backgroundImage =
+    //     "url('https://source.unsplash.com/1600x900/?" + name + "')";
   },
 };
 

@@ -22,7 +22,7 @@ let weather = {
       const { temp, humidity } = data.main;
       const { speed } = data.wind;
       const { all } = data.clouds;
-      document.querySelector(".city").innerText = "Weather in " + name;
+      document.querySelector(".city").innerText = name + ", Cavite";
       document.querySelector(".icon").src =
         "https://openweathermap.org/img/wn/" + icon + ".png";
       document.querySelector(".description").innerText = description;
