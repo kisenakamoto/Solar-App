@@ -21,15 +21,15 @@ body {
 }
 
 .card2 {
-    background: #000000d0;
-    color: white;
-    padding: 2em;
-    padding-top: 0.5em;
-    border-radius: 30px;
-    width: auto;
-    max-width: 420px;
-    margin: 1em;
-  }
+  background: #000000d0;
+  color: white;
+  padding: 2em;
+  padding-top: 0.5em;
+  border-radius: 30px;
+  width: auto;
+  max-width: 420px;
+  margin: 1em;
+}
 
 .search {
   display: flex;
@@ -76,27 +76,30 @@ h1.temp {
   align-items: center;
 }
 
-
 #fmt {
-    margin-left: 8px;
+  margin-left: 8px;
+}
+
+#sol {
+  font-size: 90%;
 }
 
 .uptime {
-    font-size: 70%;
-    margin-top: 1em;
-    font-style: italic;
+  font-size: 70%;
+  margin-top: 1em;
+  font-style: italic;
 }
 
 .prebill {
-    color: rgb(224, 84, 84);
+  color: rgb(224, 84, 84);
 }
 
 .export {
-    color: rgb(0, 148, 34);
+  color: rgb(0, 148, 34);
 }
 
 .overall {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .description {
@@ -120,16 +123,16 @@ h1.temp {
 }
 
 .solar.loading {
-    visibility: hidden;
-    max-height: 20px;
-    position: relative;
-  }
-  
-  .solar.loading:after {
-    visibility: visible;
-    content: "Loading...";
-    color: white;
-    position: absolute;
-    top: 0;
-    left: 20px;
-  }
+  visibility: hidden;
+  max-height: 20px;
+  position: relative;
+}
+
+.solar.loading:after {
+  visibility: visible;
+  content: "Loading...";
+  color: white;
+  position: absolute;
+  top: 0;
+  left: 20px;
+}
