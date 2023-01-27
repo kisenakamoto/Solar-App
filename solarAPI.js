@@ -74,7 +74,7 @@ let solar = {
     document.querySelector(".monthly").innerText =
       "Monthly Savings: ₱ " + Math.round(monthlysavings * 100) / 100;
     document.querySelector(".overall").innerText =
-      "Overall Savings: ₱ " + Math.round(totalsavings * 100) / 100;
+      "Overall Savings: " +"\n" + "₱ " + Math.round(totalsavings * 100) / 100;
     document.querySelector(".solar").classList.remove("loading");
     //   document.body.style.backgroundImage =
     //     "url('https://source.unsplash.com/1600x900/?" + name + "')";
