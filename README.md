@@ -1,2 +1,2 @@
 # SolarApp
- Solar harvest and power import tracking
+ Solar harvest and power import tracking with weather monitor
