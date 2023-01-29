@@ -66,13 +66,13 @@ let solar = {
     document.querySelector(".meralco").innerText = "Meralco Bill for " + month;
     document.querySelector(".uptime").innerText = "Updated: " + uploadTime;
     document.querySelector(".prebill").innerText =
-      "Import Cost: ₱ " + Math.round(bill * 100) / 100;
+      "Import Cost: " +"\n" + "₱ " + Math.round(bill * 100) / 100;
     document.querySelector(".export").innerText =
-      "Export Savings: ₱ " + Math.round(exportsavings * 100) / 100;
+      "Export Savings: " +"\n" + "₱ " + Math.round(exportsavings * 100) / 100;
     document.querySelector(".selfuse").innerText =
-      "Self-Use Savings: ₱ " + Math.round(selfusesavings * 100) / 100;
+      "Self-Use Savings: " +"\n" + "₱ " + Math.round(selfusesavings * 100) / 100;
     document.querySelector(".monthly").innerText =
-      "Monthly Savings: ₱ " + Math.round(monthlysavings * 100) / 100;
+      "Monthly Savings: " +"\n" + "₱ " + Math.round(monthlysavings * 100) / 100;
     document.querySelector(".overall").innerText =
       "Overall Savings: " +"\n" + "₱ " + Math.round(totalsavings * 100) / 100;
     document.querySelector(".solar").classList.remove("loading");
