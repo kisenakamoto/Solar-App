@@ -55,11 +55,10 @@ let solar = {
       "October",
       "November",
       "December",
-      "January",
     ];
 
     const d = new Date();
-    let month = monthname[d.getMonth() + 1];
+    let month = monthname[d.getMonth()];
 
     document.querySelector(".bill").innerText =
       "₱ " + Math.round(totalbill * 100) / 100;
