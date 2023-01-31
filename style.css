@@ -1,5 +1,5 @@
 body {
-  display: grid;
+  /* display: flex; */
   justify-content: center;
   align-items: center;
   height: 100vh;
@@ -7,7 +7,7 @@ body {
   font-family: "Open Sans", sans-serif;
   font-size: 120%;
   background: #222;
-  background-image: url("https://source.unsplash.com/1600x900/?sky");
+  background-image: url("https://source.unsplash.com/1600x900/?weather");
 }
 
 .card {
@@ -15,20 +15,21 @@ body {
   color: white;
   padding: 2em;
   border-radius: 30px;
-  width: 100%;
+  width: auto;
   max-width: 420px;
   margin: 1em;
 }
 
-.card1 {
-    background: #000000d0;
-    color: white;
-    padding: 2em;
-    border-radius: 30px;
-    width: 100%;
-    max-width: 420px;
-    margin: 1em;
-  }
+.card2 {
+  background: #000000d0;
+  color: white;
+  padding: 2em;
+  padding-top: 0.5em;
+  border-radius: 30px;
+  width: auto;
+  max-width: 420px;
+  margin: 1em;
+}
 
 .search {
   display: flex;
@@ -75,9 +76,31 @@ h1.temp {
   align-items: center;
 }
 
-
 #fmt {
-    margin-left: 8px;
+  margin-left: 8px;
+}
+
+#sol {
+  margin-left: 8px;
+  font-size: 85%;
+}
+
+.uptime {
+  font-size: 70%;
+  margin-top: 1em;
+  font-style: italic;
+}
+
+.prebill {
+  color: rgb(224, 84, 84);
+}
+
+.export {
+  color: rgb(0, 148, 34);
+}
+
+.overall {
+  font-weight: bold;
 }
 
 .description {
@@ -92,6 +115,21 @@ h1.temp {
 }
 
 .weather.loading:after {
+  visibility: visible;
+  content: "Loading...";
+  color: white;
+  position: absolute;
+  top: 0;
+  left: 20px;
+}
+
+.solar.loading {
+  visibility: hidden;
+  max-height: 20px;
+  position: relative;
+}
+
+.solar.loading:after {
   visibility: visible;
   content: "Loading...";
   color: white;
