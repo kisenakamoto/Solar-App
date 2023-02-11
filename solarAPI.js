@@ -64,9 +64,22 @@ let solar = {
       "November",
       "December",
     ];
-
+    
     const d = new Date();
     let month = monthname[d.getMonth()];
+    let day = d.getDate();
+    console.log("day: " + day);
+
+    if (day >=9){
+      if (d.getMonth()<11){
+        month = monthname[d.getMonth() + 1];
+        console.log("month: " + month);}
+        else{
+          month = monthname[d.getMonth() - 11];
+          console.log("month: " + month);
+        }
+    }
+
 
     document.querySelector(".bill").innerText =
       "₱ " + Math.round(totalbill * 100) / 100;
