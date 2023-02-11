@@ -32,15 +32,23 @@ let solar = {
   },
   displaySolar: function (data) {
     const { uploadTime, yieldtotal, feedinenergy, consumeenergy } = data.result;
-    let currentimport = consumeenergy - 941.5; //variable total
-    let currentexport = feedinenergy - 331.69; //variable total
-    let bill = currentimport * 11.29; //variable rate
-    let exportsavings = currentexport * 7.12; //variable rate
+    //monthly variables
+    let importprev = 1159.49 
+    let exportprev = 554.76 
+    let yieldprev = 1098.5 
+    let savingsprev = 9523.52
+    let importrate = 11.26 
+    let exportrate = 6.92 
+
+    let currentimport = consumeenergy - importprev;
+    let currentexport = feedinenergy - exportprev;
+    let bill = currentimport * importrate;
+    let exportsavings = currentexport * exportrate;
     let totalbill = bill - exportsavings;
-    let selfusesavings = (yieldtotal - 755.55 - currentexport) * 11.29; //variable rate
+    let selfusesavings = (yieldtotal - yieldprev - currentexport) * importrate;
     let monthlysavings = selfusesavings + exportsavings;
 
-    let totalsavings = selfusesavings + exportsavings + 6629.46; //variable total
+    let totalsavings = selfusesavings + exportsavings + savingsprev;
 
     const monthname = [
       "January",
