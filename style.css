@@ -10,7 +10,8 @@ body {
   background-image: url("https://source.unsplash.com/1600x900/?weather");
 }
 
-.card {
+.card,
+.card2 {
   background: #000000d0;
   color: white;
   padding: 2em;
@@ -21,14 +22,7 @@ body {
 }
 
 .card2 {
-  background: #000000d0;
-  color: white;
-  padding: 2em;
   padding-top: 0.5em;
-  border-radius: 30px;
-  width: auto;
-  max-width: 420px;
-  margin: 1em;
 }
 
 .search {
@@ -108,13 +102,15 @@ h1.temp {
   margin-left: 8px;
 }
 
-.weather.loading {
+.weather.loading,
+.solar.loading{
   visibility: hidden;
   max-height: 20px;
   position: relative;
 }
 
-.weather.loading:after {
+.weather.loading:after,
+.solar.loading:after{
   visibility: visible;
   content: "Loading...";
   color: white;
@@ -123,17 +119,3 @@ h1.temp {
   left: 20px;
 }
 
-.solar.loading {
-  visibility: hidden;
-  max-height: 20px;
-  position: relative;
-}
-
-.solar.loading:after {
-  visibility: visible;
-  content: "Loading...";
-  color: white;
-  position: absolute;
-  top: 0;
-  left: 20px;
-}
