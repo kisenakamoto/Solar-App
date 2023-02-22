@@ -68,7 +68,9 @@ let solar = {
     const d = new Date();
     let month = monthname[d.getMonth()];
     let day = d.getDate();
-    console.log("day: " + day);
+    let time = d.getHours();
+
+    console.log(`day: ${day} time: ${time}`);
 
     if (day >=9){
       if (d.getMonth()<11){
