@@ -1,8 +1,9 @@
 {
-  "importprev": 123.45,
-  "exportprev": 67.89,
-  "yieldprev": 1098.5,
-  "savingsprev": 9523.52,
-  "importrate": 11.26,
-  "exportrate": 6.92
+  "importprev" : 1159.49, 
+  "exportprev" : 554.76, 
+  "yieldprev" : 1098.5, 
+  "savingsprev" : 9523.52,
+  "importrate" : 11.26, 
+  "exportrate" : 6.92,
+  "sample" : 123
 }
