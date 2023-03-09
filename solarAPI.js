@@ -1,3 +1,6 @@
+// const config = require('./config');
+import {github_token} from './config.js';
+
 let solar = {
   fetchSolar: async function () {
     const response = await fetch(
@@ -15,7 +18,7 @@ let solar = {
     const owner = "kisenakamoto";
     const repo = "Solar-Usage";
     const file = "file.json";
-    const token = "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";
+    const token = github_token;
 
     const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
       method: "GET",
@@ -32,7 +35,7 @@ let solar = {
     const owner = "kisenakamoto";
     const repo = "Solar-Usage";
     const file = "file.json";
-    const token = "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";
+    const token = github_token;
 
     fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
   method: "GET",
@@ -87,7 +90,7 @@ let solar = {
     const owner = "kisenakamoto";
     const repo = "Solar-Usage";
     const file = "file.json";
-    const token = "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";
+    const token = github_token;
 
     const { uploadTime, yieldtotal, feedinenergy, consumeenergy } = solarData.result;
     const content = jsonData.content;
