@@ -15,7 +15,7 @@ let solar = {
     const owner = "kisenakamoto";
     const repo = "Solar-Usage";
     const file = "file.json";
-    const token = "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";
+    const token = "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";
 
     const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
       method: "GET",
@@ -32,7 +32,7 @@ let solar = {
     const owner = "kisenakamoto";
     const repo = "Solar-Usage";
     const file = "file.json";
-    const token = "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";
+    const token = "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";
 
     fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
   method: "GET",
@@ -87,7 +87,7 @@ let solar = {
     const owner = "kisenakamoto";
     const repo = "Solar-Usage";
     const file = "file.json";
-    const token = "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";
+    const token = "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";
 
     const { uploadTime, yieldtotal, feedinenergy, consumeenergy } = solarData.result;
     const content = jsonData.content;
