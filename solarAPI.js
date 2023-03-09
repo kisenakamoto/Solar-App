@@ -1,45 +1,108 @@
-// const getJSON = async url => {
-//   const response = await fetch(url);
-//   if(!response.ok) // check if response worked (no 404 errors etc...)
-//     throw new Error(response.statusText);
-
-//   const data = response.json(); // get JSON from the response
-//   return data; // returns a promise, which resolves to this data value
-// }
-
-// console.log("Fetching data...");
-// getJSON("https://www.solaxcloud.com/proxyApp/proxy/api/getRealtimeInfo.do?tokenId=20221026130839175716859&sn=SVT7CYCWCP").then(data => {
-//   const result = data.result;
-//   console.log(result);
-//   console.log("this is the time: "+result.uploadTime);
-// }).catch(error => {
-//   console.error(error);
-// });
-
 let solar = {
-  fetchSolar: function () {
-    fetch(
-      "https://corsproxy.io/?https%3A%2F%2Fwww.solaxcloud.com%2FproxyApp%2Fproxy%2Fapi%2FgetRealtimeInfo.do%3FtokenId%3D20221026130839175716859%26sn%3DSVT7CYCWCP", 
-      {credentials: "omit"}
-      )
-      .then((response) => {
-        if (!response.ok) {
-          alert("Failed to get result.");
-          throw new Error("Failed to get result.");
-        }
-        return response.json();
-      })
-      .then((data) => this.displaySolar(data));
+  fetchSolar: async function () {
+    const response = await fetch(
+      "https://corsproxy.io/?https%3A%2F%2Fwww.solaxcloud.com%2FproxyApp%2Fproxy%2Fapi%2FgetRealtimeInfo.do%3FtokenId%3D20221026130839175716859%26sn%3DSVT7CYCWCP",
+      { credentials: "omit" }
+    );
+    if (!response.ok) {
+      alert("Failed to get result.");
+      throw new Error("Failed to get result.");
+    }
+    return await response.json();
   },
-  displaySolar: function (data) {
-    const { uploadTime, yieldtotal, feedinenergy, consumeenergy } = data.result;
+
+  fetchJSON: async function () {
+    const owner = "kisenakamoto";
+    const repo = "Solar-Usage";
+    const file = "file.json";
+    const token = "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";
+
+    const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return await response.json();
+  },
+
+  
+
+  updateJSON: function () {
+    const owner = "kisenakamoto";
+    const repo = "Solar-Usage";
+    const file = "file.json";
+    const token = "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";
+
+    fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
+  method: "GET",
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+})
+  .then((response) => response.json())
+  .then((data) => {
+    const content = data.content;
+    const decodedContent = atob(content);
+    const fileData = JSON.parse(decodedContent);
+
+    // console.log(fileData.importprev);
+    // console.log(fileData.exportprev);
+
+    // Update the importprev and exportprev values
+    fileData.importprev = sampval1;
+    fileData.exportprev = sampval2;
+
+    // Encode the updated file data
+    const encodedData = btoa(JSON.stringify(fileData, null, 2));
+    // console.log(encodedData);
+
+    // Send a PUT request to update the file
+    return fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message: "Update importprev and exportprev values",
+        content: encodedData,
+        sha: data.sha,
+      }),
+    });
+  })
+  .then((response) => response.json())
+  .then((data) => {
+    console.log("File updated:", data);
+  })
+  .catch((error) => {
+    console.error("Error updating file:", error);
+  });
+
+  },
+
+  displaySolar: function () {
+    Promise.all([this.fetchSolar(), this.fetchJSON()])
+      .then(([solarData, jsonData]) => {
+    const owner = "kisenakamoto";
+    const repo = "Solar-Usage";
+    const file = "file.json";
+    const token = "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";
+
+    const { uploadTime, yieldtotal, feedinenergy, consumeenergy } = solarData.result;
+    const content = jsonData.content;
+    const decodedContent = atob(content);
+    const fileData = JSON.parse(decodedContent);
+
+
     //monthly variables
-    let importprev = 1159.49 
-    let exportprev = 554.76 
-    let yieldprev = 1098.5 
-    let savingsprev = 9523.52
-    let importrate = 11.26 
-    let exportrate = 6.92 
+    let importprev = fileData.importprev;
+    let exportprev = fileData.exportprev; 
+    let yieldprev = fileData.yieldprev;
+    let savingsprev = fileData.savingsprev;
+    let importrate = fileData.importrate; 
+    let exportrate = fileData.exportrate; 
+    let billupdated = fileData.billupdated;
 
     let currentimport = consumeenergy - importprev;
     let currentexport = feedinenergy - exportprev;
@@ -71,8 +134,10 @@ let solar = {
     let day = d.getDate();
     let time = d.getHours();
 
+
     console.log(`day: ${day} time: ${time}`);
 
+    //Change Bill month
     if (day >=9){
       if (d.getMonth()<11){
         month = monthname[d.getMonth() + 1];
@@ -80,6 +145,53 @@ let solar = {
         else{
           month = monthname[d.getMonth() - 11];
         }
+    }
+    
+    //Change billupdated value every 9th
+    if (day>=9 && billupdated==true){
+      fileData.billupdated = false; 
+      const encodedData = btoa(JSON.stringify(fileData, null, 2));
+
+      fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
+        method: "PUT",
+        headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        },
+      body: JSON.stringify({
+        message: "Update importprev and exportprev values",
+        content: encodedData,
+        sha: jsonData.sha,
+        }),
+      });
+      console.log("File updated:", jsonData);
+  }
+
+    //Update the variable values every 8th
+    if (day==8 && time>11 && billupdated==false){
+        fileData.sample = 789;
+        fileData.importprev = consumeenergy;
+        fileData.exportprev = feedinenergy;
+        fileData.yieldprev = yieldtotal;
+        fileData.savingsprev = savingsprev + monthlysavings;
+        fileData.billupdated = true; //set true every 8th
+
+        const encodedData = btoa(JSON.stringify(fileData, null, 2));
+
+        fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            message: "Update importprev and exportprev values",
+            content: encodedData,
+            sha: jsonData.sha,
+          }),
+        });
+      
+        console.log("File updated:", jsonData);
     }
 
 
@@ -100,7 +212,13 @@ let solar = {
     document.querySelector(".solar").classList.remove("loading");
     //   document.body.style.backgroundImage =
     //     "url('https://source.unsplash.com/1600x900/?" + name + "')";
+
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   },
+    
 };
 
-solar.fetchSolar();
+solar.displaySolar();
