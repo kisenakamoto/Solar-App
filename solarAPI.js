@@ -19,8 +19,9 @@
 let solar = {
   fetchSolar: function () {
     fetch(
-      "https://corsproxy.io/?https%3A%2F%2Fwww.solaxcloud.com%2FproxyApp%2Fproxy%2Fapi%2FgetRealtimeInfo.do%3FtokenId%3D20221026130839175716859%26sn%3DSVT7CYCWCP"
-    )
+      "https://corsproxy.io/?https%3A%2F%2Fwww.solaxcloud.com%2FproxyApp%2Fproxy%2Fapi%2FgetRealtimeInfo.do%3FtokenId%3D20221026130839175716859%26sn%3DSVT7CYCWCP", 
+      {credentials: "omit"}
+      )
       .then((response) => {
         if (!response.ok) {
           alert("Failed to get result.");
