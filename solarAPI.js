@@ -29,7 +29,7 @@ let solar = {
     const file = "file.json";
     const token = github_token;
 
-    const response2 = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}?ref=env`, {
+    const response2 = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -47,7 +47,7 @@ let solar = {
     });
     return await response.json();
   },
-  
+
   displaySolar: function () {
     Promise.all([this.fetchSolar(), this.fetchJSON(), this.fetchBin()])
       .then(([solarData, jsonData, binData]) => {
@@ -124,7 +124,7 @@ let solar = {
       fileData.billupdated = false; 
       const encodedData = btoa(JSON.stringify(fileData, null, 2));
 
-      fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}?ref=env`, {
+      fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
         method: "PUT",
         headers: {
         Authorization: `Bearer ${token}`,
@@ -134,7 +134,6 @@ let solar = {
         message: "Update importprev and exportprev values",
         content: encodedData,
         sha: jsonData.sha,
-        branch: "env",
         }),
       });
       alert(`Bill updated: False`);
@@ -152,7 +151,7 @@ let solar = {
 
         const encodedData = btoa(JSON.stringify(fileData, null, 2));
 
-        fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}?ref=env`, {
+        fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
           method: "PUT",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -162,7 +161,6 @@ let solar = {
             message: "Update importprev and exportprev values",
             content: encodedData,
             sha: jsonData.sha,
-            branch: "env",
           }),
         });
       
