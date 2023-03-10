@@ -11,36 +11,8 @@ let solar = {
     return await response.json();
   },
 
-  fetchJSON: async function () {
-    let github_token;
-
-    const response1 = await fetch("https://api.jsonbin.io/v3/b/640a270cc0e7653a0585230c/", {
-      headers: {
-        "X-Master-Key": "$2b$10$C0BFb/UlbWDerSGQdx9vquHOxkKBJRjWWz80GqpqMpfLPU2IbJqey",
-      },
-    });
-
-    const data = await response1.json();
-    const result = data.record;
-    github_token = result.github_token;
-
-    const owner = "kisenakamoto";
-    const repo = "Solar-Usage";
-    const file = "file.json";
-    const token = github_token;
-
-    const response2 = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    return await response2.json();
-},
-
   fetchBin: async function () {
-    const response = await fetch("https://api.jsonbin.io/v3/b/640a270cc0e7653a0585230c/", {
+    const response = await fetch("https://api.jsonbin.io/v3/b/640af76bebd26539d08c35d6/latest", {
       headers: {
         "X-Master-Key": "$2b$10$C0BFb/UlbWDerSGQdx9vquHOxkKBJRjWWz80GqpqMpfLPU2IbJqey",
       },
@@ -48,33 +20,52 @@ let solar = {
     return await response.json();
   },
 
+  updateBin: async function (requestData) {
+    const binId = "640af76bebd26539d08c35d6";
+    const apiKey = "$2b$10$C0BFb/UlbWDerSGQdx9vquHOxkKBJRjWWz80GqpqMpfLPU2IbJqey";
+    // const requestData = JSON.stringify({"sample": "123"});
+
+    const response1 = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
+      headers: {
+        "X-Master-Key": apiKey,
+      },
+    });
+
+    if (response1.ok) {
+      const existingData = await response1.json();
+      const mergedData = Object.assign(existingData.record, JSON.parse(requestData));
+      const response2 = await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Master-Key": apiKey,
+        },
+        body: JSON.stringify(mergedData),
+      });
+      if (response2.ok) {
+        console.log("Data saved successfully!");
+      } else {
+        console.log("Failed to save data.");
+      }
+    } else {
+      console.log("Failed to get existing data.");
+    }
+  },
+
   displaySolar: function () {
-    Promise.all([this.fetchSolar(), this.fetchJSON(), this.fetchBin()])
-      .then(([solarData, jsonData, binData]) => {
+    Promise.all([this.fetchSolar(), this.fetchBin()])
+      .then(([solarData, binData]) => {
     const result = binData.record;
-    const github_token = result.github_token;
-
-    const owner = "kisenakamoto";
-    const repo = "Solar-Usage";
-    const file = "file.json";
-    const token = github_token;
-
-
     const { uploadTime, yieldtotal, feedinenergy, consumeenergy } = solarData.result;
-    
-    const content = jsonData.content;
-    const decodedContent = atob(content);
-    const fileData = JSON.parse(decodedContent);
-
-
+  
     //monthly variables
-    let importprev = fileData.importprev;
-    let exportprev = fileData.exportprev; 
-    let yieldprev = fileData.yieldprev;
-    let savingsprev = fileData.savingsprev;
-    let importrate = fileData.importrate; 
-    let exportrate = fileData.exportrate; 
-    let billupdated = fileData.billupdated;
+    let importprev = result.importprev;
+    let exportprev = result.exportprev; 
+    let yieldprev = result.yieldprev;
+    let savingsprev = result.savingsprev;
+    let importrate = result.importrate; 
+    let exportrate = result.exportrate; 
+    let billupdated = result.billupdated;
 
     let currentimport = consumeenergy - importprev;
     let currentexport = feedinenergy - exportprev;
@@ -121,51 +112,23 @@ let solar = {
     
     //Change billupdated value every 9th
     if (day>=9 && billupdated==true){
-      fileData.billupdated = false; 
-      const encodedData = btoa(JSON.stringify(fileData, null, 2));
-
-      fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
-        method: "PUT",
-        headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-        },
-      body: JSON.stringify({
-        message: "Update importprev and exportprev values",
-        content: encodedData,
-        sha: jsonData.sha,
-        }),
-      });
+      const requestData = JSON.stringify({"billupdated": false});
+      this.updateBin(requestData);
       alert(`Bill updated: False`);
       
   }
 
     //Update the variable values every 8th
     if (day==8 && time>11 && billupdated==false){
-        fileData.sample = 224;
-        fileData.importprev = consumeenergy;
-        fileData.exportprev = feedinenergy;
-        fileData.yieldprev = yieldtotal;
-        fileData.savingsprev = savingsprev + monthlysavings;
-        fileData.billupdated = true; //set true every 8th
-
-        const encodedData = btoa(JSON.stringify(fileData, null, 2));
-
-        fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            message: "Update importprev and exportprev values",
-            content: encodedData,
-            sha: jsonData.sha,
-          }),
-        });
-      
-        console.log("File updated:", jsonData);
-        alert("Variables updated!");
+      const requestData = JSON.stringify({
+        "billupdated": true,
+        "importprev": consumeenergy,
+        "exportprev": feedinenergy,
+        "yieldprev": yieldtotal,
+        "savingsprev": (savingsprev + monthlysavings)
+      });
+      this.updateBin(requestData);
+      alert("Variables updated!");
     }
 
 
