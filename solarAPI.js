@@ -158,4 +158,8 @@ let solar = {
     
 };
 
+document.querySelector(".flex-container button").addEventListener("click", function () {
+  var name = prompt('Enter your name');
+});
+
 solar.displaySolar();

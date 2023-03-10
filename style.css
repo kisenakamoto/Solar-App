@@ -10,12 +10,21 @@ body {
   background-image: url("https://source.unsplash.com/1600x900/?weather");
   background-size: cover;
 }
+.flex-container{
+  display: flex;
+}
+
+.flex-container button{
+  margin-left: 2em;
+}
+
 
 .card,
 .card2 {
   background: #000000d0;
   color: white;
   padding: 2em;
+  padding-right: 0.5em;
   border-radius: 30px;
   width: auto;
   max-width: 420px;
@@ -113,10 +122,18 @@ h1.temp {
 .weather.loading:after,
 .solar.loading:after{
   visibility: visible;
-  content: "Loading...";
+  content: "";
+  background: url(https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif)center center;
   color: white;
   position: absolute;
   top: 0;
-  left: 20px;
+  left: 40%;
+  width: 24px;
+  height: 24px;
+  background-size: 100%;
+}
+
+.solar.loading:after{
+  top: 60%;
 }
 
