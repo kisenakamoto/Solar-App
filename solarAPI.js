@@ -159,7 +159,21 @@ let solar = {
 };
 
 document.querySelector(".flex-container button").addEventListener("click", function () {
-  var name = prompt('Enter your name');
+  var pin = prompt('Enter pin');
+  if (pin=="0411"){
+    var newimportrate = prompt('Enter Import Rate: ');
+    var newexportrate = prompt('Enter Export Rate: ');
+
+    const requestData = JSON.stringify({
+      "importrate": parseFloat(newimportrate),
+      "exportrate": parseFloat(newexportrate)
+    });
+    solar.updateBin(requestData);
+    alert("Rates updated!");
+  }
+  else alert("Wrong pin");
+
+  
 });
 
 solar.displaySolar();
