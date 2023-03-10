@@ -1,10 +1,10 @@
 {
   "importprev": 1381.74,
-  "exportprev": 881.38,
-  "yieldprev": 1566.6,
-  "savingsprev": 13376.7952,
+  "exportprev": 881.4,
+  "yieldprev": 1566.7,
+  "savingsprev": 13377.834400000002,
   "importrate": 11.26,
   "exportrate": 6.92,
-  "sample": 123,
-  "billupdated": false
+  "sample": 224,
+  "billupdated": true
 }
