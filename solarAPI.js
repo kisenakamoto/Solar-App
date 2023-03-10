@@ -29,7 +29,7 @@ let solar = {
     const file = "file.json";
     const token = github_token;
 
-    const response2 = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
+    const response2 = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}?ref=env`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -179,7 +179,7 @@ let solar = {
       fileData.billupdated = false; 
       const encodedData = btoa(JSON.stringify(fileData, null, 2));
 
-      fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
+      fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}?ref=env`, {
         method: "PUT",
         headers: {
         Authorization: `Bearer ${token}`,
@@ -189,14 +189,16 @@ let solar = {
         message: "Update importprev and exportprev values",
         content: encodedData,
         sha: jsonData.sha,
+        branch: "env",
         }),
       });
-      console.log("File updated:", jsonData);
+      alert(`Bill updated: False`);
+      
   }
 
     //Update the variable values every 8th
     if (day==8 && time>11 && billupdated==false){
-        fileData.sample = 789;
+        fileData.sample = 224;
         fileData.importprev = consumeenergy;
         fileData.exportprev = feedinenergy;
         fileData.yieldprev = yieldtotal;
@@ -205,7 +207,7 @@ let solar = {
 
         const encodedData = btoa(JSON.stringify(fileData, null, 2));
 
-        fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
+        fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}?ref=env`, {
           method: "PUT",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -215,10 +217,12 @@ let solar = {
             message: "Update importprev and exportprev values",
             content: encodedData,
             sha: jsonData.sha,
+            branch: "env",
           }),
         });
       
         console.log("File updated:", jsonData);
+        alert("Variables updated!");
     }
 
 
