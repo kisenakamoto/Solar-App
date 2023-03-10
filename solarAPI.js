@@ -1,6 +1,3 @@
-// const config = require('./config');
-import {github_token} from './config.js';
-
 let solar = {
   fetchSolar: async function () {
     const response = await fetch(
@@ -15,15 +12,38 @@ let solar = {
   },
 
   fetchJSON: async function () {
+    let github_token;
+
+    const response1 = await fetch("https://api.jsonbin.io/v3/b/640a270cc0e7653a0585230c/", {
+      headers: {
+        "X-Master-Key": "$2b$10$C0BFb/UlbWDerSGQdx9vquHOxkKBJRjWWz80GqpqMpfLPU2IbJqey",
+      },
+    });
+
+    const data = await response1.json();
+    const result = data.record;
+    github_token = result.github_token;
+
     const owner = "kisenakamoto";
     const repo = "Solar-Usage";
     const file = "file.json";
     const token = github_token;
 
-    const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
+    const response2 = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return await response2.json();
+},
+
+
+  fetchBin: async function () {
+    const response = await fetch("https://api.jsonbin.io/v3/b/640a270cc0e7653a0585230c/", {
+      headers: {
+        "X-Master-Key": "$2b$10$C0BFb/UlbWDerSGQdx9vquHOxkKBJRjWWz80GqpqMpfLPU2IbJqey",
       },
     });
     return await response.json();
@@ -31,66 +51,70 @@ let solar = {
 
   
 
-  updateJSON: function () {
-    const owner = "kisenakamoto";
-    const repo = "Solar-Usage";
-    const file = "file.json";
-    const token = github_token;
+//   updateJSON: function () {
+//     const owner = "kisenakamoto";
+//     const repo = "Solar-Usage";
+//     const file = "file.json";
+//     const token = github_token;
 
-    fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
-  method: "GET",
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-})
-  .then((response) => response.json())
-  .then((data) => {
-    const content = data.content;
-    const decodedContent = atob(content);
-    const fileData = JSON.parse(decodedContent);
+//     fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
+//   method: "GET",
+//   headers: {
+//     Authorization: `Bearer ${token}`,
+//   },
+// })
+//   .then((response) => response.json())
+//   .then((data) => {
+//     const content = data.content;
+//     const decodedContent = atob(content);
+//     const fileData = JSON.parse(decodedContent);
 
-    // console.log(fileData.importprev);
-    // console.log(fileData.exportprev);
+//     // console.log(fileData.importprev);
+//     // console.log(fileData.exportprev);
 
-    // Update the importprev and exportprev values
-    fileData.importprev = sampval1;
-    fileData.exportprev = sampval2;
+//     // Update the importprev and exportprev values
+//     fileData.importprev = sampval1;
+//     fileData.exportprev = sampval2;
 
-    // Encode the updated file data
-    const encodedData = btoa(JSON.stringify(fileData, null, 2));
-    // console.log(encodedData);
+//     // Encode the updated file data
+//     const encodedData = btoa(JSON.stringify(fileData, null, 2));
+//     // console.log(encodedData);
 
-    // Send a PUT request to update the file
-    return fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: "Update importprev and exportprev values",
-        content: encodedData,
-        sha: data.sha,
-      }),
-    });
-  })
-  .then((response) => response.json())
-  .then((data) => {
-    console.log("File updated:", data);
-  })
-  .catch((error) => {
-    console.error("Error updating file:", error);
-  });
+//     // Send a PUT request to update the file
+//     return fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file}`, {
+//       method: "PUT",
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         message: "Update importprev and exportprev values",
+//         content: encodedData,
+//         sha: data.sha,
+//       }),
+//     });
+//   })
+//   .then((response) => response.json())
+//   .then((data) => {
+//     console.log("File updated:", data);
+//   })
+//   .catch((error) => {
+//     console.error("Error updating file:", error);
+//   });
 
-  },
+//   },
 
   displaySolar: function () {
-    Promise.all([this.fetchSolar(), this.fetchJSON()])
-      .then(([solarData, jsonData]) => {
+    Promise.all([this.fetchSolar(), this.fetchJSON(), this.fetchBin()])
+      .then(([solarData, jsonData, binData]) => {
+    const result = binData.record;
+    const github_token = result.github_token;
+
     const owner = "kisenakamoto";
     const repo = "Solar-Usage";
     const file = "file.json";
     const token = github_token;
+
 
     const { uploadTime, yieldtotal, feedinenergy, consumeenergy } = solarData.result;
     const content = jsonData.content;
