@@ -44,6 +44,7 @@ let solar = {
       });
       if (response2.ok) {
         console.log("Data saved successfully!");
+        alert("Data saved successfully!");
       } else {
         console.log("Failed to save data.");
       }
@@ -128,7 +129,7 @@ let solar = {
         "savingsprev": (savingsprev + monthlysavings)
       });
       this.updateBin(requestData);
-      alert("Variables updated!");
+      alert("Monthly variables updating has been successful!");
     }
 
 
@@ -169,7 +170,6 @@ document.querySelector(".flex-container button").addEventListener("click", funct
       "exportrate": parseFloat(newexportrate)
     });
     solar.updateBin(requestData);
-    alert("Rates updated!");
   }
   else alert("Wrong pin");
 
