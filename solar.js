@@ -139,7 +139,7 @@ let solar = {
 
     document.querySelector(".bill").innerText =
       "₱ " + Math.round(totalbill * 100) / 100;
-    document.querySelector(".meralco").innerText = "Meralco Bill for " + month;
+    document.querySelector(".meralco").innerText = "Meralco Bill"+"\n" + "for " + month;
     document.querySelector(".uptime").innerText = "Updated: " + uploadTime;
     document.querySelector(".prebill").innerText =
       "Import Cost: " +"\n" + "₱ " + Math.round(bill * 100) / 100;
