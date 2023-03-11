@@ -1,6 +1,7 @@
 let weather = {
   apiKey: "aba6ff9d6de967d5eac6fd79114693cc",
   fetchWeather: function (city) {
+    if (city !== null){
     fetch(
       "https://api.openweathermap.org/data/2.5/weather?q=" +
         city +
@@ -15,6 +16,9 @@ let weather = {
         return response.json();
       })
       .then((data) => this.displayWeather(data));
+    }
+    else
+    return;
   },
 
   fetchWeatherLat: function () {
