@@ -11,17 +11,16 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
 }
-.flex-container{
+.flex-container {
   display: flex;
   justify-content: space-between;
 }
 
-.flex-container button{
+.flex-container button {
   margin-left: 2em;
   margin-top: 0em;
   margin-right: 0em;
 }
-
 
 .card,
 .card2 {
@@ -47,7 +46,6 @@ body {
 
 h2.meralco {
   margin-block-end: 0em;
-;
 }
 
 button {
@@ -122,17 +120,18 @@ h1.temp {
 }
 
 .weather.loading,
-.solar.loading{
+.solar.loading {
   visibility: hidden;
   max-height: 20px;
   position: relative;
 }
 
 .weather.loading:after,
-.solar.loading:after{
+.solar.loading:after {
   visibility: visible;
   content: "";
-  background: url(https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif)center center;
+  background: url(https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif)
+    center center;
   color: white;
   position: absolute;
   top: 0;
@@ -142,7 +141,6 @@ h1.temp {
   background-size: 100%;
 }
 
-.solar.loading:after{
+.solar.loading:after {
   top: 60%;
 }
-

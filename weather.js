@@ -1,5 +1,7 @@
 let weather = {
+
   apiKey: "aba6ff9d6de967d5eac6fd79114693cc",
+
   fetchWeather: function (city) {
     fetch(
       "https://api.openweathermap.org/data/2.5/weather?q=" +
@@ -31,49 +33,45 @@ let weather = {
       })
       .then((data) => this.displayWeather(data));
   },
+
   displayWeather: function (data) {
     const { name } = data;
     const { icon, description } = data.weather[0];
     const { temp, humidity } = data.main;
     const { speed } = data.wind;
     const { all } = data.clouds;
-    document.querySelector(".city").innerText = name ;
-    document.querySelector(".icon").src =
-      "https://openweathermap.org/img/wn/" + icon + ".png";
+
+    document.querySelector(".city").innerText = name;
+    document.querySelector(".icon").src = "https://openweathermap.org/img/wn/" + icon + ".png";
     document.querySelector(".description").innerText = description;
     document.querySelector(".temp").innerText = temp + "°C";
-    document.querySelector(".humidity").innerText =
-      "Humidity: " + humidity + "%";
+    document.querySelector(".humidity").innerText = "Humidity: " + humidity + "%";
     document.querySelector(".clouds").innerText = "Cloud Cover: " + all + "%";
-    document.querySelector(".wind").innerText =
-      "Wind speed: " + speed + " km/h";
+    document.querySelector(".wind").innerText = "Wind speed: " + speed + " km/h";
     document.querySelector(".weather").classList.remove("loading");
-    //   document.body.style.backgroundImage =
-    //     "url('https://source.unsplash.com/1600x900/?" + name + "')";
   },
+
   search: function () {
     this.fetchWeather(document.querySelector(".search-bar").value);
   },
+
 };
 
 document.querySelector(".search button").addEventListener("click", function () {
-  if (document.querySelector(".search-bar").value === ""){
-    alert("INVALID INPUT")
+  if (document.querySelector(".search-bar").value === "") {
+    alert("INVALID INPUT");
     return;
   }
   weather.search();
 });
 
-document
-  .querySelector(".search-bar")
-  .addEventListener("keyup", function (event) {
-    if (event.key == "Enter") {
-      if (document.querySelector(".search-bar").value === ""){
-        alert("INVALID INPUT")
-        return;
-      }
-      else weather.search();
-    }
-  });
+document.querySelector(".search-bar").addEventListener("keyup", function (event) {
+  if (event.key == "Enter") {
+    if (document.querySelector(".search-bar").value === "") {
+      alert("INVALID INPUT");
+      return;
+    } else weather.search();
+  }
+});
 
 weather.fetchWeatherLat();
