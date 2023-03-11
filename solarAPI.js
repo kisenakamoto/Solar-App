@@ -165,7 +165,7 @@ document.querySelector(".flex-container button").addEventListener("click", funct
     var newimportrate = prompt('Enter Import Rate: ');
     var newexportrate = prompt('Enter Export Rate: ');
 
-    if (newimportrate === null || newexportrate === null){
+    if (newimportrate === null || newimportrate == "" || newexportrate === null || newexportrate === ""){
       return;
     }
     else{
