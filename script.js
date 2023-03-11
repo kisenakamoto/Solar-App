@@ -57,7 +57,7 @@ let weather = {
 };
 
 document.querySelector(".search button").addEventListener("click", function () {
-  if (document.querySelector(".search-bar").value === null){
+  if (document.querySelector(".search-bar").value === ""){
     alert("INVALID INPUT")
     return;
   }
@@ -68,7 +68,7 @@ document
   .querySelector(".search-bar")
   .addEventListener("keyup", function (event) {
     if (event.key == "Enter") {
-      if (document.querySelector(".search-bar").value === null){
+      if (document.querySelector(".search-bar").value === ""){
         alert("INVALID INPUT")
         return;
       }

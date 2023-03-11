@@ -44,7 +44,8 @@ let solar = {
       });
       if (response2.ok) {
         console.log("Data saved successfully!");
-        alert("Data saved successfully!");
+        alert("Data saved successfully! Click OK to reload page.");
+        document.location.reload();
       } else {
         console.log("Failed to save data.");
       }
@@ -129,7 +130,10 @@ let solar = {
         "savingsprev": (savingsprev + monthlysavings)
       });
       this.updateBin(requestData);
-      alert("Monthly variables updating has been successful!");
+      alert(`Monthly update every 8th has been successful! 
+      Final estimated bill for ${month} is ₱${Math.round(totalbill * 100) / 100}
+      Total Monthly Savings: ₱${Math.round(monthlysavings * 100) / 100}
+      Counter will now reset after page reload.`);
     }
 
 
@@ -160,7 +164,7 @@ let solar = {
 };
 
 document.querySelector(".flex-container button").addEventListener("click", function () {
-  var pin = prompt('Enter PIN');
+  var pin = prompt('Enter PIN:');
   if (pin=="0411"){
     var newimportrate = prompt('Enter Import Rate: ');
     var newexportrate = prompt('Enter Export Rate: ');
@@ -176,7 +180,6 @@ document.querySelector(".flex-container button").addEventListener("click", funct
       });
 
       solar.updateBin(requestData);
-      document.location.reload();
     }
   }
   else if (pin === null){
