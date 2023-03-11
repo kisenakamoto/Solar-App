@@ -160,13 +160,13 @@ let solar = {
 };
 
 document.querySelector(".flex-container button").addEventListener("click", function () {
-  var pin = prompt('Enter pin');
+  var pin = prompt('ENTER PIN');
   if (pin=="0411"){
     var newimportrate = prompt('Enter Import Rate: ');
     var newexportrate = prompt('Enter Export Rate: ');
 
-    if (newimportrate, newexportrate === null || newimportrate, newexportrate == ""){
-      alert("Error");
+    if (newimportrate === null || newexportrate === null || newimportrate === "" || newexportrate == ""){
+      alert("ERROR. PLEASE TRY AGAIN.");
       return;
     }
     else{
@@ -182,7 +182,7 @@ document.querySelector(".flex-container button").addEventListener("click", funct
     return;
   }
   else
-    alert("Wrong pin");
+    alert("WRONG PIN. PLEASE TRY AGAIN.");
 
 });
 
