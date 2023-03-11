@@ -165,15 +165,24 @@ document.querySelector(".flex-container button").addEventListener("click", funct
     var newimportrate = prompt('Enter Import Rate: ');
     var newexportrate = prompt('Enter Export Rate: ');
 
-    const requestData = JSON.stringify({
-      "importrate": parseFloat(newimportrate),
-      "exportrate": parseFloat(newexportrate)
-    });
-    solar.updateBin(requestData);
-  }
-  else alert("Wrong pin");
+    if (newimportrate === null || newexportrate === null){
+      return;
+    }
+    else{
+      const requestData = JSON.stringify({
+        "importrate": parseFloat(newimportrate),
+        "exportrate": parseFloat(newexportrate)
+      });
 
-  
+      solar.updateBin(requestData);
+    }
+  }
+  else if (pin === null){
+    return;
+  }
+  else
+    alert("Wrong pin");
+
 });
 
 solar.displaySolar();
