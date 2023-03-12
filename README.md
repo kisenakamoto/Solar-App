@@ -1,5 +1,7 @@
 # Solar Usage App
- Solar harvest and power import tracking with weather monitor
+ Solar harvest and power import tracking using Solax API and weather monitor with OpenWeatherMap API. 
+ 
+ This site was built using [GitHub Pages](https://pages.github.com/).
  
 https://kisenakamoto.github.io/Solar-Usage/
 
