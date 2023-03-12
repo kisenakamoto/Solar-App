@@ -67,11 +67,12 @@ let solar = {
         const result = binData.record;
         const { uploadTime, yieldtotal, feedinenergy, consumeenergy } = solarData.result;
 
-        //monthly variables
+        //monthly variables from JSONBin
         let importprev = result.importprev;
         let exportprev = result.exportprev;
         let yieldprev = result.yieldprev;
         let savingsprev = result.savingsprev;
+        let billprev = result.billprev;
         let importrate = result.importrate;
         let exportrate = result.exportrate;
         let billupdated = result.billupdated;
@@ -80,7 +81,7 @@ let solar = {
         let currentexport = feedinenergy - exportprev;
         let bill = currentimport * importrate;
         let exportsavings = currentexport * exportrate;
-        let totalbill = bill - exportsavings;
+        let totalbill = (bill - exportsavings) + billprev;
         let selfusesavings = (yieldtotal - yieldprev - currentexport) * importrate;
         let monthlysavings = selfusesavings + exportsavings;
         let totalsavings = selfusesavings + exportsavings + savingsprev;
@@ -129,20 +130,37 @@ let solar = {
 
         //Update the variable values every 8th
         if (day == 8 && time > 11 && billupdated == false) {
-          const requestData = JSON.stringify({
-            billupdated: true,
-            importprev: consumeenergy,
-            exportprev: feedinenergy,
-            yieldprev: yieldtotal,
-            savingsprev: savingsprev + monthlysavings,
-          });
-          this.updateBin(requestData);
-          alert(`Monthly update every 8th has been successful! 
-                Final estimated bill for ${month} is ₱${roundOff(totalbill)}
-                Total Monthly Savings: ₱${roundOff(monthlysavings)}
-                Counter will now reset after page reload.`);
+          if (totalbill < 0){
+            const requestData = JSON.stringify({
+              billupdated: true,
+              importprev: consumeenergy,
+              exportprev: feedinenergy,
+              yieldprev: yieldtotal,
+              savingsprev: savingsprev + monthlysavings,
+              billprev: roundOff(totalbill),
+            });
+            this.updateBin(requestData);
+            alert(`Monthly update every 8th has been successful!\n\n` +
+                  `Final estimated bill for ${month}: ₱${roundOff(totalbill)}\n` +
+                  `Total Monthly Savings: ₱${roundOff(monthlysavings)}\n\n` +
+                  `Counter will now reset after reloading the page.`);
+          } 
+
+          else {
+            const requestData = JSON.stringify({
+              billupdated: true,
+              importprev: consumeenergy,
+              exportprev: feedinenergy,
+              yieldprev: yieldtotal,
+              savingsprev: savingsprev + monthlysavings,
+            });
+            this.updateBin(requestData);
+            alert(`Monthly update every 8th has been successful!\n\n` +
+                  `Final estimated bill for ${month}: ₱${roundOff(totalbill)}\n` +
+                  `Total Monthly Savings: ₱${roundOff(monthlysavings)}\n\n` +
+                  `Counter will now reset after reloading the page.`);
+          }
         }
-        
         document.querySelector(".bill").innerText = `₱ ${roundOff(totalbill)}`;
         document.querySelector(".meralco").innerText = `Meralco Bill\nfor ${month}`;
         document.querySelector(".uptime").innerText = `Updated: ${uploadTime}`;
@@ -152,8 +170,6 @@ let solar = {
         document.querySelector(".monthly").innerText = `Monthly Savings:\n₱ ${roundOff(monthlysavings)}`;
         document.querySelector(".overall").innerText = `Overall Savings:\n₱ ${roundOff(totalsavings)}`;
         document.querySelector(".solar").classList.remove("loading");
-        
-
       })
       .catch((error) => {
         console.error(error);
