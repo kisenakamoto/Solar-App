@@ -108,17 +108,18 @@ let solar = {
 
         console.log(`Updated: ${uploadTime}`);
 
-        // Updated _ minutes ago
+        // Updated X minutes ago
         const timeAPI = new Date(uploadTime);
-        const timeDifferenceMs = d.getTime() - timeAPI.getTime();
+        const timeDifferenceMs = new Date() - timeAPI;
         const minutesDifference = Math.floor(timeDifferenceMs / 1000 / 60);
         const hoursDifference = Math.floor(minutesDifference / 60);
-        let timeDifference;
-        if (hoursDifference > 0) {
-          timeDifference = `${hoursDifference} hour${hoursDifference > 1 ? 's' : ''}`;
-        } else {
-          timeDifference = `${minutesDifference} minute${minutesDifference > 1 ? 's' : ''}`;
-        }
+
+        const timeUnit = hoursDifference > 0 ? 'hour' : 'minute';
+        const timeValue = hoursDifference > 0 ? hoursDifference : minutesDifference;
+
+        const formatter = new Intl.RelativeTimeFormat('en', { style: 'narrow' });
+        const formattedTimeDifference = formatter.format(-timeValue, timeUnit);
+        console.log(`Updated ${formattedTimeDifference}`);
 
         //Change Bill month
         if (day >= 9) {
@@ -175,7 +176,7 @@ let solar = {
         }
         document.querySelector(".bill").innerText = `₱ ${roundOff(totalbill)}`;
         document.querySelector(".meralco").innerText = `Meralco Bill\nfor ${month}`;
-        document.querySelector(".uptime").innerText = `Last updated ${timeDifference} ago`;
+        document.querySelector(".uptime").innerText = `Last updated ${formattedTimeDifference}`;
         document.querySelector(".prebill").innerText = `Import Cost:\n₱ ${roundOff(bill)}`;
         document.querySelector(".export").innerText = `Export Savings:\n₱ ${roundOff(exportsavings)}`;
         document.querySelector(".selfuse").innerText = `Self-Use Savings:\n₱ ${roundOff(selfusesavings)}`;
