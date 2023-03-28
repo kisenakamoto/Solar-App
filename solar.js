@@ -106,7 +106,19 @@ let solar = {
         let day = d.getDate();
         let time = d.getHours();
 
-        console.log(`day: ${day} time: ${time}`);
+        console.log(`Updated: ${uploadTime}`);
+
+        // Updated _ minutes ago
+        const timeAPI = new Date(uploadTime);
+        const timeDifferenceMs = d.getTime() - timeAPI.getTime();
+        const minutesDifference = Math.floor(timeDifferenceMs / 1000 / 60);
+        const hoursDifference = Math.floor(minutesDifference / 60);
+        let timeDifference;
+        if (hoursDifference > 0) {
+          timeDifference = `${hoursDifference} hour${hoursDifference > 1 ? 's' : ''}`;
+        } else {
+          timeDifference = `${minutesDifference} minute${minutesDifference > 1 ? 's' : ''}`;
+        }
 
         //Change Bill month
         if (day >= 9) {
@@ -163,7 +175,7 @@ let solar = {
         }
         document.querySelector(".bill").innerText = `₱ ${roundOff(totalbill)}`;
         document.querySelector(".meralco").innerText = `Meralco Bill\nfor ${month}`;
-        document.querySelector(".uptime").innerText = `Updated: ${uploadTime}`;
+        document.querySelector(".uptime").innerText = `Last updated ${timeDifference} ago`;
         document.querySelector(".prebill").innerText = `Import Cost:\n₱ ${roundOff(bill)}`;
         document.querySelector(".export").innerText = `Export Savings:\n₱ ${roundOff(exportsavings)}`;
         document.querySelector(".selfuse").innerText = `Self-Use Savings:\n₱ ${roundOff(selfusesavings)}`;
