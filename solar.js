@@ -111,26 +111,34 @@ let solar = {
         console.log(`Updated: ${uploadTime}`);
 
         // Updated X minutes ago
-        const timeAPI = new Date(uploadTime);
-        console.log(timeAPI.getTime());
-        console.log(currentTime);
-  
-        const timeDifferenceMs = currentTime - timeAPI.getTime();
+        const apiTimestamp = uploadTime;
+        const [dateStr, timeStr] = apiTimestamp.split(' ');
+        const [year, month1, date] = dateStr.split('-');
+        const [hours, minutes, seconds] = timeStr.split(':');
+        // Create a new Date object using the extracted components
+        const uploadTime1 = new Date(year, month1 - 1, date, hours, minutes, seconds);
+        // Get the current time
+        const now = new Date();
+
+        // Calculate the time difference in milliseconds
+        const timeDifferenceMs = now.getTime() - uploadTime1.getTime();
 
         // Calculate the time difference in minutes and hours
         const minutesDifference = Math.floor(timeDifferenceMs / 1000 / 60);
         const hoursDifference = Math.floor(minutesDifference / 60);
 
-        // Determine the output based on the time difference
-        let timeDifference;
-        if (hoursDifference > 0) {
-          timeDifference = `${hoursDifference} hour${hoursDifference > 1 ? 's' : ''}`;
-        } else {
-          timeDifference = `${minutesDifference} minute${minutesDifference > 1 ? 's' : ''}`;
-        }
+        // Determine the time unit to use based on the time difference
+        const timeUnit = hoursDifference > 0 ? 'hour' : 'minute';
+        const timeValue = hoursDifference > 0 ? hoursDifference : minutesDifference;
+
+        // Format the time difference as a string
+        const formattedTimeDifference = timeUnit === 'hour'
+          ? `${hoursDifference} hour${hoursDifference > 1 ? 's' : ''}`
+          : `${minutesDifference} minute${minutesDifference > 1 ? 's' : ''}`;
 
         // Output the result
-        console.log(`Updated ${timeDifference} ago`);
+        console.log(`Updated ${formattedTimeDifference} ago`);
+
 
         //Change Bill month
         if (day >= 9) {
@@ -187,7 +195,7 @@ let solar = {
         }
         document.querySelector(".bill").innerText = `₱ ${roundOff(totalbill)}`;
         document.querySelector(".meralco").innerText = `Meralco Bill\nfor ${month}`;
-        document.querySelector(".uptime").innerText = `Last updated ${timeDifference} ago`;
+        document.querySelector(".uptime").innerText = `Last updated ${formattedTimeDifference} ago`;
         document.querySelector(".prebill").innerText = `Import Cost:\n₱ ${roundOff(bill)}`;
         document.querySelector(".export").innerText = `Export Savings:\n₱ ${roundOff(exportsavings)}`;
         document.querySelector(".selfuse").innerText = `Self-Use Savings:\n₱ ${roundOff(selfusesavings)}`;
