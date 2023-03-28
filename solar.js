@@ -105,21 +105,32 @@ let solar = {
         let month = monthname[d.getMonth()];
         let day = d.getDate();
         let time = d.getHours();
+        let currentTime = d.getTime();
+
 
         console.log(`Updated: ${uploadTime}`);
 
         // Updated X minutes ago
         const timeAPI = new Date(uploadTime);
-        const timeDifferenceMs = new Date() - timeAPI;
+        console.log(timeAPI.getTime());
+        console.log(currentTime);
+  
+        const timeDifferenceMs = currentTime - timeAPI.getTime();
+
+        // Calculate the time difference in minutes and hours
         const minutesDifference = Math.floor(timeDifferenceMs / 1000 / 60);
         const hoursDifference = Math.floor(minutesDifference / 60);
 
-        const timeUnit = hoursDifference > 0 ? 'hour' : 'minute';
-        const timeValue = hoursDifference > 0 ? hoursDifference : minutesDifference;
+        // Determine the output based on the time difference
+        let timeDifference;
+        if (hoursDifference > 0) {
+          timeDifference = `${hoursDifference} hour${hoursDifference > 1 ? 's' : ''}`;
+        } else {
+          timeDifference = `${minutesDifference} minute${minutesDifference > 1 ? 's' : ''}`;
+        }
 
-        const formatter = new Intl.RelativeTimeFormat('en', { style: 'narrow' });
-        const formattedTimeDifference = formatter.format(-timeValue, timeUnit);
-        console.log(`Updated ${formattedTimeDifference}`);
+        // Output the result
+        console.log(`Updated ${timeDifference} ago`);
 
         //Change Bill month
         if (day >= 9) {
@@ -176,7 +187,7 @@ let solar = {
         }
         document.querySelector(".bill").innerText = `₱ ${roundOff(totalbill)}`;
         document.querySelector(".meralco").innerText = `Meralco Bill\nfor ${month}`;
-        document.querySelector(".uptime").innerText = `Last updated ${formattedTimeDifference}`;
+        document.querySelector(".uptime").innerText = `Last updated ${timeDifference} ago`;
         document.querySelector(".prebill").innerText = `Import Cost:\n₱ ${roundOff(bill)}`;
         document.querySelector(".export").innerText = `Export Savings:\n₱ ${roundOff(exportsavings)}`;
         document.querySelector(".selfuse").innerText = `Self-Use Savings:\n₱ ${roundOff(selfusesavings)}`;
