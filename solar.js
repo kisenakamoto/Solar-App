@@ -179,7 +179,7 @@ let solar = {
 
 document.querySelector(".flex-container button").addEventListener("click", function () {
   var pin = prompt("Enter PIN:");
-  if (pin == "0411") {
+  if (pin == "nakamoto") {
     var newimportrate = prompt("Enter Import Rate: ");
     var newexportrate = prompt("Enter Export Rate: ");
 
