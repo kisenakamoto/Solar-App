@@ -1,7 +1,7 @@
 let solar = {
   fetchSolar: async function () {
     const response = await fetch(
-      "https://corsproxy.io/?https%3A%2F%2Fwww.solaxcloud.com%2FproxyApp%2Fproxy%2Fapi%2F" +
+      "https://api.codetabs.com/v1/proxy/?quest=https://www.solaxcloud.com/proxyApp/proxy/api/" +
       "getRealtimeInfo.do%3FtokenId%3D20221026130839175716859%26sn%3DSVT7CYCWCP",
       { credentials: "omit" }
     );
