@@ -224,12 +224,15 @@ document.querySelector(".flex-container button").addEventListener("click", funct
       alert("ERROR. PLEASE TRY AGAIN.");
       return;
     } else {
+      alert("やめてください! (╯°Д °)╯╧╧")
+      /*
       const requestData = JSON.stringify({
         importrate: parseFloat(newimportrate),
         exportrate: parseFloat(newexportrate),
       });
 
       solar.updateBin(requestData);
+      */
     }
   } else if (pin === null) {
     return;
